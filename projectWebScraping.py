@@ -4,6 +4,8 @@ import requests
 import smtplib
 import time
 import datetime 
+import pandas as pd
+import csv
 
 #connect to the website
 #URL = 'https://www.amazon.com/Funny-Data-Systems-Business-Analyst/dp/B07FNW9FGJ/ref=sr_1_3?dchild=1&keywords=data%2Banalyst%2Btshirt&qid=1626655184&sr=8-3&customId=B0752XJYNL&th=1'
@@ -27,7 +29,27 @@ title = soup2.find(id='productTitle').get_text()
 
 price = soup2.find('span', class_='aok-offscreen').get_text()
 
+#print(title)
+#print(price)
+
+title = title.strip()
+price = price.strip()[1:]
+
+today = datetime.date.today()
+print(today)
+
 print(title)
 print(price)
 
+header = ['Title','Price','Date']
+data = [title, price, today]
+
+with open('AmazonWebScraperDataset.csv','w',newline='',encoding='UTF8') as f:
+    writer = csv.writer(f)
+    writer.writerow(header)
+    writer.writerow(data)
+
+
+df = pd.read_csv(r'C:\Users\dani_\OneDrive\Escritorio\DataAnalystYoutube\Web Scraping\AmazonWebScraperDataset.csv')
+print(df)
 
